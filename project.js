@@ -43,7 +43,7 @@ const deposit = () =>{
 const getNumberOfLines = () => {
     while(true){ 
         const lines = prompt("Enter the number of lines to bet on (1-3): ")
-        const numberOfLines = parseFloat(lines);
+        const numberOfLines = parseInt(lines);
     
         if(isNaN(numberOfLines) || numberOfLines <= 0 || numberOfLines > 3){
             console.log("Invalid number of lines, try again");
@@ -73,8 +73,9 @@ const spin = () => {
             symbols.push(symbol); 
         }
     }
-    const reels = [[], [], []];
+    const reels = [];
     for(let i = 0; i < COLS; i++){
+        reels.push([])
         const reelSymbols = [...symbols];
         for(let j = 0; j < ROWS; j++){
             const randomIndex = Math.floor(Math.random() * reelSymbols.length);
@@ -85,9 +86,38 @@ const spin = () => {
     }  
     return reels;
 }
-const reels = spin();
-console.log(reels);
+
+const transpose =(reels) => {
+    const rows = [];
+
+    for(let i = 0; i < ROWS; i++){
+        rows.push([]);
+        for(let j = 0; j < COLS; j++ ){
+            rows[i].push(reels[j][i])
+        }
+    }
+    return rows;
+}
+
+const printRows = (rows) => {
+    for(const row of rows){
+        let rowString = "";
+        for(const [i, symbol] of row.entries()){
+            rowString += symbol
+            if(i != row.length - 1){
+                rowString += " |"
+            }
+        }
+        console.log(rowString)
+    }
+}
 
 let balance = deposit();
 const numberOfLines = getNumberOfLines();
 const bet = getBet(balance);
+const reels = spin();
+const rows = transpose(reels);
+printRows(rows);
+
+
+
