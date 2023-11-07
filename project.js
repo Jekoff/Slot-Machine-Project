@@ -100,16 +100,18 @@ const transpose =(reels) => {
 }
 
 const printRows = (rows) => {
-    for(const row of rows){
+    for (const row of rows) {
         let rowString = "";
-        for(const [i, symbol] of row.entries()){
-            rowString += symbol
-            if(i != row.length - 1){
-                rowString += " |"
+        for (const [i, symbol] of row.entries()) {
+            rowString += symbol;
+            if (i !== row.length - 1) {
+                rowString += " |";
             }
         }
+        console.log(rowString);
     }
 };
+
 
 const getWinnings = (rows, bet, lines) => {
     let winnings = 0;
@@ -148,11 +150,14 @@ balance += winnings;
 console.log("You won, $" + winnings.toString())
 
 if (balance <= 0){
-    console,log("You lost all your money, game over!");
+    console.log("You lost all your money, game over! ");
     break;
 }
 
 const playAgain = prompt("Would you like to play again? (y/n): ")
+if(playAgain != "y"){
+    break;
+}
 }
 };
 
